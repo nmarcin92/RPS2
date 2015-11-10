@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='rps-sensor',
+    name='rps-server',
     version='1.0.0',
     packages=[''],
     url='',
@@ -9,5 +9,5 @@ setup(
     author='mnowak',
     author_email='mnowak@student.agh.edu.pl',
     description='',
-    install_requires=['psutil', 'requests']
+    install_requires=['djangorestframework', 'markdown', 'django-filter']
 )
