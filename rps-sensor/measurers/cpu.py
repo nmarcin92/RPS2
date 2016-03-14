@@ -1,6 +1,6 @@
 import psutil
 
-from configuration import CONFIG
+from utils.configuration import CONFIG
 
 
 def measure_cpu():
