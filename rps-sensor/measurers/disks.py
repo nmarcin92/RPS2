@@ -6,5 +6,5 @@ def get_disk_partitions():
 
 
 def get_disk_usages(partitions):
-    
+    pass
 

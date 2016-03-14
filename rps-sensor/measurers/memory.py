@@ -1,12 +1,10 @@
 import psutil
 
-from measurers.memdata import MemoryData
-
 
 def measure_memory():
-    mdata = MemoryData()
-    mdata.virtual = mdata.virtual(*measure_virtual())
-    mdata.swap = mdata.swap(*measure_swap())
+    mdata = {}
+    mdata['virtual'] = measure_virtual()
+    mdata['swap'] = measure_swap()
     return mdata
 
 

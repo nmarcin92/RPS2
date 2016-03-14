@@ -1,14 +1,13 @@
 import psutil
 
-from measurers.cpudata import CpuData
-from sensor import CONFIG
+from configuration import CONFIG
 
 
 def measure_cpu():
-    data = CpuData()
-    data.usage = measure_cpu_usage()
-    data.times = data.times(*measure_cpu_times())
-    data.cpu_count = measure_cpu_count()
+    data = {}
+    data['usage'] = measure_cpu_usage()
+    data['times'] = [tuple(times) for times in measure_cpu_times()]
+    data['cpu_count'] = measure_cpu_count()
     return data
 
 
@@ -21,4 +20,4 @@ def measure_cpu_times():
 
 
 def measure_cpu_count():
-    return psutil.cpu_count
+    return psutil.cpu_count()
