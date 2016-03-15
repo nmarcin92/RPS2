@@ -1,4 +1,5 @@
 import requests
+from constants.resources import TOKENS_RES
 
 from utils.configuration import CONFIG
 from utils.logger import LOGGER
@@ -14,7 +15,7 @@ class TokenNotFoundException(Exception):
 def aquire_token():
     LOGGER.info('Trying to aquire token from server')
     token_file = open(CONFIG.TOKEN_FILE, 'w')
-    req = requests.put(CONFIG.TOKENS_ADDR, json={'system_name': CONFIG.SYSTEM_NAME})
+    req = requests.put(CONFIG.SERVER_ADDR + TOKENS_RES, json={'system_name': CONFIG.SYSTEM_NAME})
     if req.ok:
         LOGGER.info('Aquiring token from server succeeded')
         generated_token = req.json()['generated_token']

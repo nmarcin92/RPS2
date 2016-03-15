@@ -9,5 +9,5 @@ setup(
         author='Marcin Nowak',
         author_email='mnowak@student.agh.edu.pl',
         description='',
-        install_requires=['flask']
+        install_requires=['flask', 'pymongo', 'rps-shared']
 )

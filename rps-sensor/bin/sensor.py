@@ -20,17 +20,19 @@ def measure_loop():
     data_buffer = []
 
     while True:
-
-        data = {'timestamp': time.time()}
-        data['cpu'] = cpu.measure_cpu()
-        data['memory'] = memory.measure_memory()
-
+        data = {'timestamp': time.time(),
+                'token': SESSION_INFO.TOKEN,
+                'measured': {
+                    'cpu': cpu.measure_cpu(),
+                    'memory': memory.measure_memory()}
+                }
         data_buffer.append(data)
 
         if len(data_buffer) == CONFIG.BUFFER_SIZE:
             send_buffer(data_buffer, SESSION_INFO.TOKEN)
             data_buffer = []
 
+        time.sleep(CONFIG.SLEEP_TIME)
 
 def main():
     initialize()
