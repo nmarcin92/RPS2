@@ -2,7 +2,7 @@ import json
 import random
 import string
 
-from constants.resources import TOKENS_RES, MEASURES_RES
+# from constants.resources import TOKENS_RES, MEASURES_RES
 from flask import Flask, request, jsonify
 
 from configuration import CONFIG
@@ -18,7 +18,8 @@ def generate_token():
     return ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(CONFIG.TOKEN_LENGTH))
 
 
-@app.route(MEASURES_RES, methods=['PUT'])
+# @app.route(MEASURES_RES, methods=['PUT'])
+@app.route('/measures', methods=['PUT'])
 def save_measure():
     token = request.get_json()['system_token']
     if Persistence.is_token_registered(token):
@@ -30,7 +31,8 @@ def save_measure():
 
 # @app.route(TOKENS_RES, methods=['PUT', 'OPTIONS'])
 # @crossdomain(origin='*')
-@app.route(TOKENS_RES, methods=['PUT'])
+# @app.route(TOKENS_RES, methods=['PUT'])
+@app.route('/tokens', methods=['PUT'])
 def create_system_token():
     system_name = request.get_json()['system_name']
     tokens = Persistence.get_tokens()
@@ -41,13 +43,13 @@ def create_system_token():
 
     return jsonify({'generated_token': new_token})
 
-
-@app.route(TOKENS_RES + 's', methods=['GET', 'OPTIONS'])
-@crossdomain(origin='*')
-def get_system_names():
-    token = request.args.get('token')
-    sys_names = Persistence.get_system_names_by_token(token)
-    return jsonify({'names': sys_names})
+#
+# @app.route(TOKENS_RES + 's', methods=['GET', 'OPTIONS'])
+# @crossdomain(origin='*')
+# def get_system_names():
+#     token = request.args.get('token')
+#     sys_names = Persistence.get_system_names_by_token(token)
+#     return jsonify({'names': sys_names})
 
 def run_rest_server():
     import logging
