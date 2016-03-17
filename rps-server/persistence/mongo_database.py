@@ -44,3 +44,10 @@ class Persistence(object):
 
         for type, measurements in resources.iteritems():
             db[type].insert_many(measurements)
+
+    @staticmethod
+    def get_system_names_by_token(token):
+        systems = Persistence.METADATA_DB.tokens.find({
+            'token': token
+        })
+        return [sys['system_name'] for sys in systems]

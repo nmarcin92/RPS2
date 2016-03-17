@@ -7,8 +7,11 @@ from flask import Flask, request, jsonify
 
 from configuration import CONFIG
 from persistence.mongo_database import Persistence
+from rest.crossdomain import crossdomain
+from rest.middleware import HTTPMethodOverrideMiddleware
 
 app = Flask(__name__)
+app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
 
 def generate_token():
@@ -25,6 +28,8 @@ def save_measure():
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
+# @app.route(TOKENS_RES, methods=['PUT', 'OPTIONS'])
+# @crossdomain(origin='*')
 @app.route(TOKENS_RES, methods=['PUT'])
 def create_system_token():
     system_name = request.get_json()['system_name']
@@ -37,5 +42,19 @@ def create_system_token():
     return jsonify({'generated_token': new_token})
 
 
+@app.route(TOKENS_RES + 's', methods=['GET', 'OPTIONS'])
+@crossdomain(origin='*')
+def get_system_names():
+    token = request.args.get('token')
+    sys_names = Persistence.get_system_names_by_token(token)
+    return jsonify({'names': sys_names})
+
 def run_rest_server():
+    import logging
+
+# Log only in production mode.
+    if not app.debug:
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.INFO)
+        app.logger.addHandler(stream_handler)
     app.run(port=8080)

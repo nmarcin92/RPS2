@@ -1,0 +1,10 @@
+div.signin-div {
+    width: 400px;
+    height: 100vh;
+    text-align: center;
+}
+
+form.form-signin-rps {
+    position: relative;
+    top: 35%;
+}

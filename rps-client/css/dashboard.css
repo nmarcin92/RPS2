@@ -1,0 +1,7 @@
+#sidebar-wrapper {
+    background-color: #2dc16d;
+}
+
+#sidebar-wrapper * {
+    color: black;
+}
