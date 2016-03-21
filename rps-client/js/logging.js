@@ -1,15 +1,22 @@
 function loginWithToken() {
     var token = $("#inputToken").val();
-    var data1 = {'system_name': token};
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: "http://localhost:8080/tokenss",
+        url: "http://localhost:8080/tokens",
         contentType: 'application/json',
         data: {'token': token},
         success: function(data){
-            alert(data);
+            session_info['token'] = token;
+            session_info['sys_name'] = data['name'];
+            onLogged();
         }
+    });
+}
+
+function onLogged() {
+    $('#login-wrapper').fadeOut(100, function() {
+        $('#wrapper').show();
     });
 }
 

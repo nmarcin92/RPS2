@@ -7,20 +7,20 @@ from configuration import CONFIG
 
 class Persistence(object):
     CLIENT = None
-    METADATA_DB = None
+    DB = None
 
     @staticmethod
     def initialize():
         Persistence.CLIENT = MongoClient(CONFIG.MONGODB_SERVER_ADDR)
-        Persistence.METADATA_DB = Persistence.CLIENT.rps2
+        Persistence.DB = Persistence.CLIENT.rps2
 
     @staticmethod
     def get_tokens():
-        return [t['token'] for t in Persistence.METADATA_DB.tokens.find()]
+        return [t['token'] for t in Persistence.DB.tokens.find()]
 
     @staticmethod
     def create_token(token, system_name):
-        Persistence.METADATA_DB.tokens.insert_one({
+        Persistence.DB.tokens.insert_one({
             'token': token,
             'system_name': system_name
         })
@@ -31,7 +31,6 @@ class Persistence(object):
 
     @staticmethod
     def save_measure(token, buffer):
-        db = Persistence.CLIENT[token]
         resources = {}
         for data in buffer:
             timestamp = datetime.fromtimestamp(data['timestamp'])
@@ -43,11 +42,28 @@ class Persistence(object):
                          'measured:': measured})
 
         for type, measurements in resources.iteritems():
-            db[type].insert_many(measurements)
+            collection_name = Persistence.get_collection_name(token, type)
+            Persistence.DB[collection_name].insert_many(measurements)
 
     @staticmethod
-    def get_system_names_by_token(token):
-        systems = Persistence.METADATA_DB.tokens.find({
+    def get_system_name_by_token(token):
+        system = Persistence.DB.tokens.find_one({
             'token': token
         })
-        return [sys['system_name'] for sys in systems]
+        return system['system_name']
+
+    @staticmethod
+    def get_monitored_data(token, type, start_date, end_date):
+        collection_name = Persistence.get_collection_name(token, type)
+        collection = Persistence.DB[collection_name]
+        if collection is not None:
+            return {'data': [measure for measure in collection.find({'timestamp': {
+                '$gt': start_date,
+                '$lt': end_date
+            }})]}
+        else:
+            return {}
+
+    @classmethod
+    def get_collection_name(cls, token, type):
+        return token + '#' + type
