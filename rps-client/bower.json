@@ -19,12 +19,9 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
-    "bootstrap": "~3.1.1",
-    "bootstrap-datepicker": "~1.5.1",
-    "Chart.js": "^1.0.2"
-  },
-  "install": {
-    "path": "libs"
+    "angular": "1.5.3",
+    "angular-route": "1.5.3",
+    "bootstrap-css-only": "3.3.6",
+    "angular-bootstrap": "1.2.5"
   }
 }

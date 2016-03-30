@@ -1,15 +1,13 @@
-var session_info = {
-    'token': '',
-    'sys_name': ''
-};
+var app = angular.module('app', ['ngRoute', 'ui.bootstrap']);
 
-function locationHashChanged() {
-    if (location.hash === "#logged") {
-        loginWithToken();
-    }
-    if (location.hash === "#moncpu") {
-        loadMonitoring();
-    }
-}
-
-window.onhashchange = locationHashChanged;
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when('/', {
+            templateUrl: 'html/homepage.html',
+            controller: 'Homepage'
+        })
+        .when('/monitoring', {
+            templateUrl: 'html/monitoring.html',
+            controller: 'Monitoring'
+        });
+});
