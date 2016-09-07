@@ -1,11 +1,6 @@
-import json
-import random
-import string
-
 from constants.resources import TOKENS_RES, MEASURES_RES
 from flask import Flask, request, jsonify
 
-from persistence.mongo_database import Persistence
 from rest.crossdomain import crossdomain
 from rest.measures import save_measure, get_monitored_data
 from rest.middleware import HTTPMethodOverrideMiddleware

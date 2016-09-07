@@ -3,7 +3,7 @@ import os
 
 import sys
 
-from utils.configuration import ROOT_DIR
+from configuration import ROOT_DIR
 
 formatter = logging.Formatter('%(asctime)-15s [%(levelname)-5.5s] %(message)s')
 LOGGER = logging.getLogger('rps-sensor')
