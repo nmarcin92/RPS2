@@ -1,7 +1,7 @@
 import requests
 from constants.resources import TOKENS_RES
 
-from ..utils.configuration import CONFIG
+from utils.configuration import CONFIG
 from utils.logger import LOGGER
 
 TOKEN_START = '=== TOKEN START ==='

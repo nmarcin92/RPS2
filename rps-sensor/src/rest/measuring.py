@@ -3,8 +3,8 @@ import time
 import requests
 from constants.resources import MEASURES_RES
 
-from ..utils.configuration import CONFIG
-from ..utils.logger import LOGGER
+from utils.configuration import CONFIG
+from utils.logger import LOGGER
 
 
 def send_buffer(data_buffer, token):

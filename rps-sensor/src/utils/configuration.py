@@ -17,5 +17,5 @@ class Configuration(object):
         self.SYSTEM_NAME = config.get('Authentication', 'system_name')
 
 
-ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
+ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '../..'))
 CONFIG = Configuration(os.path.join(ROOT_DIR, 'conf.ini'))
